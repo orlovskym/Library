@@ -45,17 +45,29 @@ function generateTile(i) {
   tile.classList.add('bookTile');
   tile.id=('book'+i)
 
+
+  //create control buttons
+  let buttons = document.createElement('div');
+  buttons.style.gridArea='1/2/2/3'
+  buttons.style.display='flex'
+  buttons.style.gap='8px'
+  tile.append(buttons)
+  let readButton = document.createElement('img');
+  readButton.src='./images/book.svg';
+  buttons.append(readButton)
+  readButton.addEventListener('click', (e)=>{
+    library[i].read=!library[i].read;
+    refreshTiles();
+  })
   let closeButton = document.createElement('img');
   closeButton.src='./images/close.svg';
-  closeButton.style.gridArea='1/2/2/3'
-
-  tile.append(closeButton)
+  buttons.append(closeButton)
   closeButton.addEventListener('click', (e)=>{
-    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+    e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
     library.splice(i,1);
   })
 
-
+  //create datadivs in tile
   let titleBox = document.createElement('div');
   titleBox.classList.add('dataRow');
   titleBox.style.gridArea='2/1/3/3'
